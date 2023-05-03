@@ -13,6 +13,7 @@
 #include "./tools/tools.hpp"
 // std
 #include <vector>
+#include <stack>
 #include <algorithm>
 
 static QVector<QPair<QString, QString>> parentheses = {
@@ -45,15 +46,17 @@ CodeEditArea::CodeEditArea(QWidget *parent)
   auto btn = new QPushButton(this);
 //  connect(btn, &QPushButton::clicked,
 //          this, &CodeEditArea::comment);
+//  connect(btn, &QPushButton::clicked,
+//          this, &CodeEditArea::normal_indent_format);
   connect(btn, &QPushButton::clicked,
-          this, &CodeEditArea::format);
+          this, &CodeEditArea::select_the_content_in_parentheses);
 }
 
 // format
 
 // simple format
 
-auto CodeEditArea::format() -> void
+auto CodeEditArea::normal_indent_format() -> void
 { // 简单一键格式化 (不处理特意修改过的文本)
   // 获取当前文本并拆分成列表
   QString cur_text = this->toPlainText();
@@ -154,7 +157,122 @@ auto CodeEditArea::format() -> void
 }
 
 
+// 选中括号中的内容
+auto CodeEditArea::_start_position_in_parentheses(const QHash<QString, QString> &right_to_left)-> int
+{
+  auto is_parentheses = [&](QChar ch) {
+    if (right_to_left.keys().contains(ch))
+    {
+      return true;
+    }
+    if (right_to_left.values().contains(ch))
+    {
+      return true;
+    }
+    return false;
+  };
+  auto cursor = this->textCursor();
+  std::stack<QString> st = std::stack<QString>();
+  cursor.movePosition(QTextCursor::PreviousCharacter);
+  auto ch = this->char_under_cursor(cursor);
+  for (; true;)
+  {
+    if (is_parentheses(ch))
+    {
+      if (right_to_left.contains(ch))
+      {
+        st.push(ch);
+      }
+      else
+      {
+        if (st.empty())
+        {
+          break;
+        }
+        else
+        {
+          st.pop();
+        }
+      }
+    }
+    if (cursor.atStart())
+    {
+      return -1;
+    }
+    cursor.movePosition(QTextCursor::PreviousCharacter);
+    ch = this->char_under_cursor(cursor);
+  }
+  const auto start_position = cursor.position();
+  return start_position;
+}
 
+auto CodeEditArea::_end_position_in_parentheses(const QHash<QString, QString> &left_to_right)-> int
+{
+  auto is_parentheses = [&](QChar ch) {
+    if (left_to_right.keys().contains(ch))
+    {
+      return true;
+    }
+    if (left_to_right.values().contains(ch))
+    {
+      return true;
+    }
+    return false;
+  };
+  auto cursor = this->textCursor();
+  std::stack<QString> st = std::stack<QString>();
+  auto ch = this->char_under_cursor(cursor);
+  for (; true ;)
+  {
+    if (is_parentheses(ch))
+    {
+      if (left_to_right.contains(ch))
+      {
+        st.push(ch);
+      }
+      else
+      {
+        if (st.empty())
+        {
+          break;
+        }
+        else
+        {
+          st.pop();
+        }
+      }
+    }
+    if (cursor.atEnd())
+    {
+      return -1;
+    }
+    cursor.movePosition(QTextCursor::NextCharacter);
+    ch = this->char_under_cursor(cursor);
+  }
+  const auto end_position = cursor.position();
+  return end_position;
+}
+
+auto CodeEditArea::select_the_content_in_parentheses()-> void
+{
+  QHash<QString, QString> left_to_right = {{"{", "}"}, {"[", "]"}, {"(", ")"}};
+  QHash<QString, QString> right_to_left = {{"}", "{"}, {"]", "["}, {")", "("}};
+  const auto start_position = _start_position_in_parentheses(right_to_left);
+  if (start_position == -1)
+  {
+    return;
+  }
+  const auto end_position = _end_position_in_parentheses(left_to_right);
+  if (end_position == -1)
+  {
+    return;
+  }
+  auto cursor = this->textCursor();
+  cursor.setPosition(start_position + 1, QTextCursor::MoveAnchor);
+  this->setTextCursor(cursor);
+  cursor.setPosition(end_position, QTextCursor::KeepAnchor);
+  this->setTextCursor(cursor);
+}
 
 // 注释 >>
 void CodeEditArea::comment()
@@ -368,6 +486,15 @@ auto CodeEditArea::get_cursor_pos() const -> QPoint {
   const auto row = cursor.blockNumber() + 1;
   const auto col = this->textCursor().columnNumber();
   return QPoint(col, row);
+}
+
+QChar CodeEditArea::char_under_cursor(const QTextCursor &cursor_) const
+{
+  auto cursor = cursor_;
+  const auto current_position = cursor.position();
+  cursor.setPosition(current_position);
+  cursor.setPosition(current_position + 1, QTextCursor::KeepAnchor);
+  return cursor.selectedText()[0];
 }
 
 QChar CodeEditArea::char_under_cursor(int offset) const {

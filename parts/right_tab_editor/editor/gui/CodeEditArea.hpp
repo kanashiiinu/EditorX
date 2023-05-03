@@ -35,8 +35,16 @@ class CodeEditArea : public QPlainTextEdit
   // format >>
  public:
   // simple format
-  auto format()->void;
+  auto normal_indent_format()->void;
+  // format <<
 
+  // 选中括号中的内容 >>
+ public:
+  auto select_the_content_in_parentheses()-> void;
+ private:
+  auto _start_position_in_parentheses(const QHash<QString, QString> &righ_to_left)-> int;
+  auto _end_position_in_parentheses(const QHash<QString, QString> &left_to_right)-> int;
+  // 选中括号中的内容 <<
 
  public: QString m_file_path = "";
  public: QString m_file_name = "";
@@ -107,6 +115,7 @@ class CodeEditArea : public QPlainTextEdit
   auto get_cursor_pos() const -> QPoint;            // 设置光标位置
 
   QChar char_under_cursor(int offset = 0) const ;
+  QChar char_under_cursor(const QTextCursor &cursor_) const ;
 
   QString word_under_cursor() const ;
 

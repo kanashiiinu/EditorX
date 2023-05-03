@@ -532,7 +532,6 @@ void MainWindow::read_settings()
 {
   QSettings settings(QDir::currentPath().append("/init.txt"), QCoreApplication::applicationName());
   const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
-  settings;
   if (geometry.isEmpty())
   {
 //    const QRect availableGeometry = QApplication::desktop()->availableGeometry(this);
@@ -551,7 +550,6 @@ void MainWindow::write_settings()
 { // // 写入配置
   qDebug() << QDir::currentPath();
   QSettings settings(QDir::currentPath().append("/init.txt"), QCoreApplication::applicationName());
-  settings;
   settings.setValue("geometry", this->saveGeometry());
 }
 

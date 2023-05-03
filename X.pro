@@ -32,6 +32,8 @@ SOURCES += \
     parts/right_tab_editor/editor/syntax_highlight/fun/MyHighlighter.cpp \
     parts/right_tab_editor/gui/TabAndTextAreaEtc.cpp \
     parts/scatter/gui/MostLeftUnknownWindow.cpp \
+    parts/scatter/work_time_reminder/fun/MaskWidget.cpp \
+    parts/scatter/work_time_reminder/gui/TimeReminderWidget.cpp
 
 HEADERS += \
     MainWindow.hpp \
@@ -49,6 +51,8 @@ HEADERS += \
     parts/right_tab_editor/editor/syntax_highlight/fun/MyHighlighter.hpp \
     parts/right_tab_editor/gui/TabAndTextAreaEtc.hpp \
     parts/scatter/gui/MostLeftUnknownWindow.hpp \
+    parts/scatter/work_time_reminder/fun/MaskWidget.hpp \
+    parts/scatter/work_time_reminder/gui/TimeReminderWidget.hpp \
     tools/tools.hpp
 
 # Default rules for deployment.
@@ -57,3 +61,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
+include($$PWD/parts/scatter/terminate/terminate.pri)

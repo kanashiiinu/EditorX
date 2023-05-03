@@ -1,5 +1,5 @@
 #include "LeftLineNumberAreaInCodeEditArea.hpp"
-#include "CodeEditArea.hpp"
+#include "./parts/right_tab_editor/editor/gui/CodeEditArea.hpp"
 // Qt
 #include <QTextEdit>
 #include <QPainter>
