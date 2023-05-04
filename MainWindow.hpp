@@ -175,6 +175,7 @@ class MainWindow : public QMainWindow
    */
   auto menu_bar_action_function_about()->void;
 
+  void loadStyle(const QString &qssFile);
  private:
   MenuBar *m_menu_bar;
 

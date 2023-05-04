@@ -6,12 +6,15 @@
 #include "./parts/left_tools/tool_parts/class_analyzer/gui/MetaInfoWidget.hpp"
 #include "./parts/scatter/terminate/gui/ShellDemo.hpp"
 #include "./parts/scatter/work_time_reminder/gui/TimeReminderWidget.hpp"
-//Qt
+#include "./parts/left_tools/tool_parts/font_and_color/gui/FontAndColorWidget.hpp"
+#include "./parts/scatter/screenshot/ScreenWidget.hpp"
+#include "./parts/left_tools/tool_parts/compare_file_in_dir/gui/CompareFileWidget.hpp"
 #include <QHBoxLayout>
 #include <QListWidget>
 #include <QStackedWidget>
 #include <QTreeView>
 #include <QFileSystemModel>
+#include <QShortcut>
 #include <QDebug>
 #include <QDir>
 #include <QString>
@@ -55,8 +58,22 @@ LeftToolListAndToolWindow::LeftToolListAndToolWindow(QWidget *parent) : QWidget(
   // work_time_reminder
   m_list_widget->addItem(QString("time reminder"));
   m_stacked_widget->addWidget(new TimeReminderWidget(this));
+  // font & color
+  m_list_widget->addItem(QString("font&color"));
+  m_stacked_widget->addWidget(new FontANdColorWidget(this));
+  // font & color
+  m_list_widget->addItem(QString("compare dir"));
+  m_stacked_widget->addWidget(new CompareFileWidget(this));
+
+  // 截屏快捷键
+  auto shortcut = new QShortcut(QKeySequence("Ctrl+Alt+s"), this);
+  connect(shortcut, &QShortcut::activated, this, []() {
+    ScreenWidget::Instance()->showFullScreen();
+  });
+
   //
-  connect(m_list_widget, &QListWidget::currentRowChanged, m_stacked_widget, &QStackedWidget::setCurrentIndex);
+  connect(m_list_widget, &QListWidget::currentRowChanged,
+          m_stacked_widget, &QStackedWidget::setCurrentIndex);
   //
   h_box->addWidget(m_stacked_widget);
   // 布局比例

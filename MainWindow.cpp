@@ -1,4 +1,7 @@
 //self
+#include <QtCore>
+#include <QtGui>
+#include <QtWidgets>
 #include "MainWindow.hpp"
 #include "./tools/tools.hpp"
 //Qt
@@ -75,6 +78,34 @@ MainWindow::MainWindow(QMainWindow *parent)
           this, &MainWindow::commit_data);
 
   this->setUnifiedTitleAndToolBarOnMac(true);   // 初始化
+
+  // qss
+  this->loadStyle(":/qss/blacksoft.css");
+}
+void MainWindow::loadStyle(const QString &qssFile)
+{
+
+  //加载样式表
+  QString qss;
+  QFile file(qssFile);
+  if (file.open(QFile::ReadOnly)) {
+    //用QTextStream读取样式文件不用区分文件编码 带bom也行
+    QStringList list;
+    QTextStream in(&file);
+    //in.setCodec("utf-8");
+    while (!in.atEnd()) {
+      QString line;
+      in >> line;
+      list << line;
+    }
+
+    file.close();
+    qss = list.join("\n");
+    QString paletteColor = qss.mid(20, 7);
+    qApp->setPalette(QPalette(paletteColor));
+    //用时主要在下面这句
+    qApp->setStyleSheet(qss);
+  }
 }
 
 MainWindow::~MainWindow()

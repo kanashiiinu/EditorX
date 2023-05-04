@@ -21,8 +21,8 @@ TimeReminderWidget::TimeReminderWidget(QWidget *parent) : QWidget(parent)
   m_connection = connect(m_timer, &QTimer::timeout,
                          this, &TimeReminderWidget::slot_mask_widget_show);
 
-//  timer->start(1 * 60 * 60 * 1000);
-  m_timer->start(3000);
+  m_timer->start(1 * 60 * 60 * 1000);
+//  m_timer->start(3000);
 
   connect(m_btn, &QPushButton::clicked,
           this, &TimeReminderWidget::slot_update_remind_time_interval);
@@ -70,11 +70,11 @@ void TimeReminderWidget::slot_update_remind_time_interval()
 {
   auto text = this->m_time_interval_input->text();
   auto num_is_int = false;
+  auto num = text.toInt(&num_is_int);
   if (not num_is_int)
   {
     return;
   }
-  auto num = text.toInt(&num_is_int);
   if (num > 8)
   {
     return;

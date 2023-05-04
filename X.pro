@@ -25,6 +25,12 @@ SOURCES += \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerFunctionInfo.cpp \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerTools.cpp \
     parts/left_tools/tool_parts/class_analyzer/gui/MetaInfoWidget.cpp \
+    parts/left_tools/tool_parts/compare_file_in_dir/fun/FileMd5Worker.cpp \
+    parts/left_tools/tool_parts/compare_file_in_dir/gui/CompareFileWidget.cpp \
+    parts/left_tools/tool_parts/font_and_color/fun/SimpleTextColorScheme.cpp \
+    parts/left_tools/tool_parts/font_and_color/gui/ColorSelectWidget.cpp \
+    parts/left_tools/tool_parts/font_and_color/gui/FontAndColorWidget.cpp \
+    parts/left_tools/tool_parts/font_and_color/gui/FontSelectWidget.cpp \
     parts/left_tools/tool_parts/search/gui/FindAndReplaceWidget.cpp \
     parts/menu_bar/gui/MenuBar.cpp \
     parts/right_tab_editor/editor/gui/CodeEditArea.cpp \
@@ -32,6 +38,7 @@ SOURCES += \
     parts/right_tab_editor/editor/syntax_highlight/fun/MyHighlighter.cpp \
     parts/right_tab_editor/gui/TabAndTextAreaEtc.cpp \
     parts/scatter/gui/MostLeftUnknownWindow.cpp \
+    parts/scatter/screenshot/ScreenWidget.cpp \
     parts/scatter/work_time_reminder/fun/MaskWidget.cpp \
     parts/scatter/work_time_reminder/gui/TimeReminderWidget.cpp
 
@@ -44,6 +51,12 @@ HEADERS += \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerFunctionInfo.hpp \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerTools.hpp \
     parts/left_tools/tool_parts/class_analyzer/gui/MetaInfoWidget.hpp \
+    parts/left_tools/tool_parts/compare_file_in_dir/fun/FileMd5Worker.hpp \
+    parts/left_tools/tool_parts/compare_file_in_dir/gui/CompareFileWidget.hpp \
+    parts/left_tools/tool_parts/font_and_color/fun/SimpleTextColorScheme.hpp \
+    parts/left_tools/tool_parts/font_and_color/gui/ColorSelectWidget.hpp \
+    parts/left_tools/tool_parts/font_and_color/gui/FontAndColorWidget.hpp \
+    parts/left_tools/tool_parts/font_and_color/gui/FontSelectWidget.hpp \
     parts/left_tools/tool_parts/search/gui/FindAndReplaceWidget.hpp \
     parts/menu_bar/gui/MenuBar.hpp \
     parts/right_tab_editor/editor/gui/CodeEditArea.hpp \
@@ -51,6 +64,7 @@ HEADERS += \
     parts/right_tab_editor/editor/syntax_highlight/fun/MyHighlighter.hpp \
     parts/right_tab_editor/gui/TabAndTextAreaEtc.hpp \
     parts/scatter/gui/MostLeftUnknownWindow.hpp \
+    parts/scatter/screenshot/ScreenWidget.hpp \
     parts/scatter/work_time_reminder/fun/MaskWidget.hpp \
     parts/scatter/work_time_reminder/gui/TimeReminderWidget.hpp \
     tools/tools.hpp
@@ -62,3 +76,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 include($$PWD/parts/scatter/terminate/terminate.pri)
+
+RESOURCES += \
+    qss.qrc
