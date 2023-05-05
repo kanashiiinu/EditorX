@@ -39,8 +39,12 @@ SOURCES += \
     parts/right_tab_editor/gui/TabAndTextAreaEtc.cpp \
     parts/scatter/gui/MostLeftUnknownWindow.cpp \
     parts/scatter/screenshot/ScreenWidget.cpp \
+    parts/scatter/shortcut/fun/ShortCutData.cpp \
+    parts/scatter/shortcut/fun/ShortCutModel.cpp \
+    parts/scatter/shortcut/gui/ShortCutWidget.cpp \
     parts/scatter/work_time_reminder/fun/MaskWidget.cpp \
-    parts/scatter/work_time_reminder/gui/TimeReminderWidget.cpp
+    parts/scatter/work_time_reminder/gui/TimeReminderWidget.cpp \
+    parts/status_bar/gui/StatusBar.cpp
 
 HEADERS += \
     MainWindow.hpp \
@@ -65,8 +69,12 @@ HEADERS += \
     parts/right_tab_editor/gui/TabAndTextAreaEtc.hpp \
     parts/scatter/gui/MostLeftUnknownWindow.hpp \
     parts/scatter/screenshot/ScreenWidget.hpp \
+    parts/scatter/shortcut/fun/ShortCutData.hpp \
+    parts/scatter/shortcut/fun/ShortCutModel.hpp \
+    parts/scatter/shortcut/gui/ShortCutWidget.hpp \
     parts/scatter/work_time_reminder/fun/MaskWidget.hpp \
     parts/scatter/work_time_reminder/gui/TimeReminderWidget.hpp \
+    parts/status_bar/gui/StatusBar.hpp \
     tools/tools.hpp
 
 # Default rules for deployment.

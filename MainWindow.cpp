@@ -4,6 +4,8 @@
 #include <QtWidgets>
 #include "MainWindow.hpp"
 #include "./tools/tools.hpp"
+#include "./parts/status_bar/gui/StatusBar.hpp"
+#include "./parts/scatter/shortcut/gui/ShortCutWidget.hpp"
 //Qt
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -46,7 +48,7 @@ MainWindow::MainWindow(QMainWindow *parent)
   // 工具栏
 //  this->addToolBar();
   // 状态栏
-  this->setStatusBar(new QStatusBar(this));
+  this->setStatusBar(new StatusBar(this));
 
   //
   auto container = new QWidget(this);
@@ -513,6 +515,17 @@ auto MainWindow::set_up_actions_function()->void {
 //  auto about = new QAction("about");
   m_menu_bar->set_action_function("about", [this]() {
     this->menu_bar_action_function_about();
+  });
+
+  m_menu_bar->set_action_function("shortcuts", [this]() {
+//    if (this->findChildren<ShortCutWidget *>().isEmpty())
+//    {
+//      auto e = new ShortCutWidget();
+//      e->show();
+//    }
+    qDebug() << "ee";
+    auto e = new ShortCutWidget();
+    e->show();
   });
 }
 
