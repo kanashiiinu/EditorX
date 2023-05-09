@@ -2,6 +2,7 @@
 //Qt
 #include <QTableWidget>
 #include <QPlainTextEdit>
+#include <QTextEdit>
 #include <QHBoxLayout>
 #include <QFileInfo>
 #include <QMessageBox>
@@ -73,7 +74,7 @@ auto TabAndTextAreaEtc::get_all_code_of_current_editor() -> QString {
   return this->current_code_edit_area()->toPlainText();
 }
 
-auto TabAndTextAreaEtc::current_code_edit_area()->CodeEditArea* {
+auto TabAndTextAreaEtc::current_code_edit_area()->CodeEditArea * {
   return qobject_cast<CodeEditArea *>(m_tab_widget->widget(m_tab_widget->currentIndex()));
 }
 
@@ -125,3 +126,10 @@ auto TabAndTextAreaEtc::is_any_file_modified() const -> bool {
   return false;
 }
 // 文件是否修改 <<
+
+//
+
+QString TabAndTextAreaEtc::get_current_file_path()
+{
+  return this->current_code_edit_area()->m_file_path;
+}

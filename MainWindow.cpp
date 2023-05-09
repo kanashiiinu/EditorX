@@ -65,6 +65,16 @@ MainWindow::MainWindow(QMainWindow *parent)
   // tools
   m_left_tool_list_and_tool_window = new LeftToolListAndToolWindow(this);
   h_box->addWidget(m_left_tool_list_and_tool_window);
+  connect(m_left_tool_list_and_tool_window, &LeftToolListAndToolWindow::signal_note_part_want_open_note,
+  [this](auto const & file_path) {
+    m_tab_and_text_area_etc->open_file_by_path(file_path);
+  });
+
+  connect(m_left_tool_list_and_tool_window, &LeftToolListAndToolWindow::signal_code_analysis_part_want_current_file_path,
+  [this]() {
+    auto file_path = m_tab_and_text_area_etc->get_current_file_path();
+    emit m_left_tool_list_and_tool_window->signal_reponse_code_analysis_current_file_path(file_path);
+  });
   // right
   // 编辑区
   m_tab_and_text_area_etc = new TabAndTextAreaEtc(this);
@@ -84,27 +94,27 @@ MainWindow::MainWindow(QMainWindow *parent)
   // qss
   this->loadStyle(":/qss/blacksoft.css");
 }
-void MainWindow::loadStyle(const QString &qssFile)
+void MainWindow::loadStyle(const QString &qss_file)
 {
-
   //加载样式表
   QString qss;
-  QFile file(qssFile);
-  if (file.open(QFile::ReadOnly)) {
+  QFile file(qss_file);
+  if (file.open(QFile::ReadOnly))
+  {
     //用QTextStream读取样式文件不用区分文件编码 带bom也行
     QStringList list;
     QTextStream in(&file);
     //in.setCodec("utf-8");
-    while (!in.atEnd()) {
+    while (!in.atEnd())
+    {
       QString line;
       in >> line;
       list << line;
     }
-
     file.close();
     qss = list.join("\n");
-    QString paletteColor = qss.mid(20, 7);
-    qApp->setPalette(QPalette(paletteColor));
+    QString palette_color = qss.mid(20, 7);
+    qApp->setPalette(QPalette(palette_color));
     //用时主要在下面这句
     qApp->setStyleSheet(qss);
   }

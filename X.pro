@@ -25,13 +25,18 @@ SOURCES += \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerFunctionInfo.cpp \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerTools.cpp \
     parts/left_tools/tool_parts/class_analyzer/gui/MetaInfoWidget.cpp \
+    parts/left_tools/tool_parts/code_analysis/gui/CodeAnalysisWidget.cpp \
     parts/left_tools/tool_parts/compare_file_in_dir/fun/FileMd5Worker.cpp \
     parts/left_tools/tool_parts/compare_file_in_dir/gui/CompareFileWidget.cpp \
     parts/left_tools/tool_parts/font_and_color/fun/SimpleTextColorScheme.cpp \
     parts/left_tools/tool_parts/font_and_color/gui/ColorSelectWidget.cpp \
     parts/left_tools/tool_parts/font_and_color/gui/FontAndColorWidget.cpp \
     parts/left_tools/tool_parts/font_and_color/gui/FontSelectWidget.cpp \
+    parts/left_tools/tool_parts/note/gui/NoteWidget.cpp \
     parts/left_tools/tool_parts/search/gui/FindAndReplaceWidget.cpp \
+    parts/left_tools/tool_parts/theme/fun/ThemeOperation.cpp \
+    parts/left_tools/tool_parts/theme/fun/ThemesManager.cpp \
+    parts/left_tools/tool_parts/theme/gui/ThemeWidget.cpp \
     parts/menu_bar/gui/MenuBar.cpp \
     parts/right_tab_editor/editor/gui/CodeEditArea.cpp \
     parts/right_tab_editor/editor/left_num_area/gui/LeftLineNumberAreaInCodeEditArea.cpp \
@@ -55,13 +60,18 @@ HEADERS += \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerFunctionInfo.hpp \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerTools.hpp \
     parts/left_tools/tool_parts/class_analyzer/gui/MetaInfoWidget.hpp \
+    parts/left_tools/tool_parts/code_analysis/gui/CodeAnalysisWidget.hpp \
     parts/left_tools/tool_parts/compare_file_in_dir/fun/FileMd5Worker.hpp \
     parts/left_tools/tool_parts/compare_file_in_dir/gui/CompareFileWidget.hpp \
     parts/left_tools/tool_parts/font_and_color/fun/SimpleTextColorScheme.hpp \
     parts/left_tools/tool_parts/font_and_color/gui/ColorSelectWidget.hpp \
     parts/left_tools/tool_parts/font_and_color/gui/FontAndColorWidget.hpp \
     parts/left_tools/tool_parts/font_and_color/gui/FontSelectWidget.hpp \
+    parts/left_tools/tool_parts/note/gui/NoteWidget.hpp \
     parts/left_tools/tool_parts/search/gui/FindAndReplaceWidget.hpp \
+    parts/left_tools/tool_parts/theme/fun/ThemeOperation.hpp \
+    parts/left_tools/tool_parts/theme/fun/ThemesManager.hpp \
+    parts/left_tools/tool_parts/theme/gui/ThemeWidget.hpp \
     parts/menu_bar/gui/MenuBar.hpp \
     parts/right_tab_editor/editor/gui/CodeEditArea.hpp \
     parts/right_tab_editor/editor/left_num_area/gui/LeftLineNumberAreaInCodeEditArea.hpp \

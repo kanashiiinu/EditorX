@@ -12,43 +12,15 @@
 CompareFileWidget::CompareFileWidget(QWidget *parent)
   : QWidget(parent)
 {
-  auto total_layout = new QVBoxLayout();
-  this->setLayout(total_layout);
-  auto left_right_layout = new QHBoxLayout();
-  total_layout->addLayout(left_right_layout);
-  // left
-  auto left_layout = new QVBoxLayout();
-  left_right_layout->addLayout(left_layout);
-  auto left_input_layout = new QHBoxLayout();
-  left_layout->addLayout(left_input_layout);
-  left_input = new QLineEdit(this);
-  left_input_layout->addWidget(left_input);
-  left_btn = new QPushButton(this);
-  left_input_layout->addWidget(left_btn);
-  left_output = new QListWidget(this);
-  left_layout->addWidget(left_output);
 
-  // right
-  auto right_layout = new QVBoxLayout();
-  left_right_layout->addLayout(right_layout);
-  auto right_input_layout = new QHBoxLayout();
-  right_layout->addLayout(right_input_layout);
-  right_input = new QLineEdit(this);
-  right_input_layout->addWidget(right_input);
-  right_btn = new QPushButton(this);
-  right_input_layout->addWidget(right_btn);
-  right_output = new QListWidget(this);
-  right_layout->addWidget(right_output);
-  //
-  compare_btn = new QPushButton("compare", this);
-  total_layout->addWidget(compare_btn);
-
+  this->_init_ui();
+  this->_init_text();
   // connect
-  connect(left_btn, &QPushButton::clicked,
+  connect(m_left_btn, &QPushButton::clicked,
           this, &CompareFileWidget::slot_left_btn_clicked);
-  connect(right_btn, &QPushButton::clicked,
+  connect(m_right_btn, &QPushButton::clicked,
           this, &CompareFileWidget::slot_right_btn_clicked);
-  connect(compare_btn, &QPushButton::clicked,
+  connect(m_compare_btn, &QPushButton::clicked,
           this, &CompareFileWidget::slot_compare_btn_clicked);
 }
 
@@ -103,14 +75,14 @@ void CompareFileWidget::_get_files_info(QMap<QString, QString> &mp, QStringList 
 */
 void CompareFileWidget::slot_left_btn_clicked()
 {
-  left_output->clear();
+  m_left_output->clear();
   m_compareNames.clear();
   QString path = QFileDialog::getExistingDirectory(nullptr, "打开文件夹", "*");
   m_path = path;
   this->_get_files_info(m_map1, m_fileNames1);
   //数据展示到界面
-  left_input->setText(path);
-  left_output->addItems(m_fileNames1);
+  m_left_input->setText(path);
+  m_left_output->addItems(m_fileNames1);
 }
 
 /*
@@ -118,13 +90,13 @@ void CompareFileWidget::slot_left_btn_clicked()
 */
 void CompareFileWidget::slot_right_btn_clicked()
 {
-  right_output->clear();
+  m_right_output->clear();
   m_compareNames.clear();
   QString path = QFileDialog::getExistingDirectory(nullptr, "打开文件夹", "*");
   m_path = path;
   _get_files_info(m_map2, m_fileNames2);
-  right_input->setText(path);
-  right_output->addItems(m_fileNames2);
+  m_right_input->setText(path);
+  m_right_output->addItems(m_fileNames2);
 }
 
 /*
@@ -149,14 +121,54 @@ void CompareFileWidget::slot_compare_btn_clicked()
     }
   }
 
-  for (int i = 0; i < right_output->count(); i++)
+  for (int i = 0; i < m_right_output->count(); i++)
   {
-    right_output->item(i)->setTextColor(QColor("green"));
-    if (not m_compareNames.contains(right_output->item(i)->text()))
+    m_right_output->item(i)->setTextColor(QColor("green"));
+    if (not m_compareNames.contains(m_right_output->item(i)->text()))
     {
-      right_output->item(i)->setTextColor(QColor("red"));
+      m_right_output->item(i)->setTextColor(QColor("red"));
     }
   }
 }
 
 
+void CompareFileWidget::_init_ui()
+{
+  auto total_layout = new QVBoxLayout();
+  this->setLayout(total_layout);
+  auto left_right_layout = new QHBoxLayout();
+  total_layout->addLayout(left_right_layout);
+  // left
+  auto left_layout = new QVBoxLayout();
+  left_right_layout->addLayout(left_layout);
+  auto left_input_layout = new QHBoxLayout();
+  left_layout->addLayout(left_input_layout);
+  m_left_input = new QLineEdit(this);
+  left_input_layout->addWidget(m_left_input);
+  m_left_btn = new QPushButton(this);
+  left_input_layout->addWidget(m_left_btn);
+  m_left_output = new QListWidget(this);
+  left_layout->addWidget(m_left_output);
+
+  // right
+  auto right_layout = new QVBoxLayout();
+  left_right_layout->addLayout(right_layout);
+  auto right_input_layout = new QHBoxLayout();
+  right_layout->addLayout(right_input_layout);
+  m_right_input = new QLineEdit(this);
+  right_input_layout->addWidget(m_right_input);
+  m_right_btn = new QPushButton(this);
+  right_input_layout->addWidget(m_right_btn);
+  m_right_output = new QListWidget(this);
+  right_layout->addWidget(m_right_output);
+  //
+  m_compare_btn = new QPushButton(this);
+  total_layout->addWidget(m_compare_btn);
+}
+
+void CompareFileWidget::_init_text()
+{
+  m_left_btn->setText("src");
+  m_right_btn->setText("des");
+  m_compare_btn->setText("compare");
+}

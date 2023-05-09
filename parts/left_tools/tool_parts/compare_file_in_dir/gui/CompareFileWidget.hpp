@@ -16,16 +16,16 @@ class CompareFileWidget : public QWidget
   Q_OBJECT
 
   // left
-  QLineEdit *left_input;
-  QPushButton *left_btn;
-  QListWidget *left_output;
+  QLineEdit *m_left_input;
+  QPushButton *m_left_btn;
+  QListWidget *m_left_output;
 
   // right
-  QLineEdit *right_input;
-  QPushButton *right_btn;
-  QListWidget *right_output;
+  QLineEdit *m_right_input;
+  QPushButton *m_right_btn;
+  QListWidget *m_right_output;
   //
-  QPushButton *compare_btn;
+  QPushButton *m_compare_btn;
 
 
   //
@@ -39,6 +39,9 @@ class CompareFileWidget : public QWidget
   CompareFileWidget(QWidget *parent = nullptr);
   ~CompareFileWidget();
 
+ private:
+  void _init_ui();
+  void _init_text();
 
  private slots:
   void slot_left_btn_clicked();

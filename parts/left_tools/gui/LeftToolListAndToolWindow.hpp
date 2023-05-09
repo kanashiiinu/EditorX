@@ -26,6 +26,13 @@ class LeftToolListAndToolWindow : public QWidget
  private:
   QTreeView *m_res_manager;
   QFileSystemModel *m_file_sys_model;
+ public:
+ signals:
+  //
+  signal_note_part_want_open_note(QString const &);
+  //
+  signal_code_analysis_part_want_current_file_path();
+  signal_reponse_code_analysis_current_file_path(QString const &);
 
 };
 

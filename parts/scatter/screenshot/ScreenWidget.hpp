@@ -1,15 +1,6 @@
 ﻿#ifndef SCREENWIDGET_H
 #define SCREENWIDGET_H
 
-/**
- * 全局截屏控件 作者:feiyangqingyun(QQ:517216493) 2016-11-11
- * 1. 鼠标右键弹出菜单。
- * 2. 支持全局截屏。
- * 3. 支持局部截屏。
- * 4. 支持截图区域拖动。
- * 5. 支持图片另存为。
- */
-
 #include <QWidget>
 #include <QMenu>
 #include <QPoint>
@@ -18,7 +9,7 @@
 class Screen
 {
  public:
-  enum STATUS
+  enum MouseStatus
   {
     SELECT,
     MOV,
@@ -35,8 +26,8 @@ class Screen
   QPoint get_left_up();
   QPoint get_right_down();
 
-  STATUS get_status();
-  void set_status(STATUS status);
+  MouseStatus get_status();
+  void set_status(MouseStatus m_status);
 
   int width();
   int height();
@@ -48,37 +39,35 @@ class Screen
 
  private:
   //记录 截图区域 左上角、右下角
-  QPoint leftUpPos, rightDownPos;
+  QPoint m_left_up_pos;
+  QPoint m_right_down_pos;
   //记录 鼠标开始位置、结束位置
-  QPoint startPos, endPos;
+  QPoint m_start_pos;
+  QPoint m_end_pos;
   //记录屏幕大小
-  int maxWidth, maxHeight;
+  int m_max_width;
+  int m_max_height;
   //三个状态: 选择区域、移动区域、设置width height
-  STATUS status;
+  MouseStatus m_status;
 
   //比较两位置，判断左上角、右下角
   void compare_point(QPoint &s, QPoint &e);
 };
 
-#ifdef quc
-class Q_DECL_EXPORT ScreenWidget : public QWidget
-#else
 class ScreenWidget : public QWidget
-#endif
-
 {
   Q_OBJECT
  public:
-  static ScreenWidget *Instance();
+  static ScreenWidget *_();
   explicit ScreenWidget(QWidget *parent = 0);
 
  private:
   static QScopedPointer<ScreenWidget> self;
-  QMenu *menu;            //右键菜单对象
-  Screen *screen;         //截屏对象
-  QPixmap *fullScreen;    //保存全屏图像
-  QPixmap *bgScreen;      //模糊背景图
-  QPoint movPos;          //坐标
+  QMenu *m_menu;            //右键菜单对象
+  Screen *m_screen;         //截屏对象
+  QPixmap *m_full_screen;    //保存全屏图像
+  QPixmap *m_background_screen;      //模糊背景图
+  QPoint m_mov_pos;          //坐标
 
  protected:
   void contextMenuEvent(QContextMenuEvent *);

@@ -30,6 +30,11 @@ class TabAndTextAreaEtc : public QWidget
 //  };
  public:
   explicit TabAndTextAreaEtc(QWidget *parent = nullptr);
+
+
+  QString get_current_file_path();
+
+
 //  auto get_code_edit_area()-> void;
   /**
    * @brief add_new_file

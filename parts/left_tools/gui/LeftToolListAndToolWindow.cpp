@@ -9,6 +9,11 @@
 #include "./parts/left_tools/tool_parts/font_and_color/gui/FontAndColorWidget.hpp"
 #include "./parts/scatter/screenshot/ScreenWidget.hpp"
 #include "./parts/left_tools/tool_parts/compare_file_in_dir/gui/CompareFileWidget.hpp"
+#include "./parts/left_tools/tool_parts/theme/gui/ThemeWidget.hpp"
+#include "./parts/left_tools/tool_parts/note/gui/NoteWidget.hpp"
+#include "./parts/left_tools/tool_parts/code_analysis/gui/CodeAnalysisWidget.hpp"
+
+//QT
 #include <QHBoxLayout>
 #include <QListWidget>
 #include <QStackedWidget>
@@ -64,11 +69,36 @@ LeftToolListAndToolWindow::LeftToolListAndToolWindow(QWidget *parent) : QWidget(
   // font & color
   m_list_widget->addItem(QString("compare dir"));
   m_stacked_widget->addWidget(new CompareFileWidget(this));
+  // themes
+  m_list_widget->addItem(QString("themes"));
+  m_stacked_widget->addWidget(new ThemeWidget(this));
+  // notes
+  m_list_widget->addItem(QString("notes"));
+  auto note_widget = new NoteWidget(this);
+  m_stacked_widget->addWidget(note_widget);
+  connect(note_widget, &NoteWidget::signal_want_open_note,
+          this, &LeftToolListAndToolWindow::signal_note_part_want_open_note);
+
+  // cpp code error
+  m_list_widget->addItem(QString("code analysis"));
+  auto code_analysis_widget = new CodeAnalysisWidget(this);
+  m_stacked_widget->addWidget(code_analysis_widget);
+
+  connect(code_analysis_widget, &CodeAnalysisWidget::signal_analysis_wait_for_file,
+          this, &LeftToolListAndToolWindow::signal_code_analysis_part_want_current_file_path);
+  connect(this, &LeftToolListAndToolWindow::signal_reponse_code_analysis_current_file_path,
+          code_analysis_widget, &CodeAnalysisWidget::slot_deal_analysis);
+
+  // cpp code format
+  m_list_widget->addItem(QString("code format"));
+  m_stacked_widget->addWidget(new QWidget(this));
+
+
 
   // 截屏快捷键
-  auto shortcut = new QShortcut(QKeySequence("Ctrl+Alt+s"), this);
+  auto shortcut = new QShortcut(QKeySequence("Ctrl+Alt+j"), this);
   connect(shortcut, &QShortcut::activated, this, []() {
-    ScreenWidget::Instance()->showFullScreen();
+    ScreenWidget::_()->showFullScreen();
   });
 
   //
