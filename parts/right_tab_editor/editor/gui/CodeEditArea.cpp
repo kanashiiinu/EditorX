@@ -1,6 +1,9 @@
 #include "CodeEditArea.hpp"
 //#include "LeftLineNumberAreaInCodeEditArea.hpp"
 #include "./parts/right_tab_editor/editor/left_num_area/gui/LeftLineNumberAreaInCodeEditArea.hpp"
+#include "./ParamPass/ParamPassDemo.hpp"
+#include "./CodeFront/CodeFrontControllWidget.hpp"
+// Qt
 #include <QScrollBar>
 #include <QCompleter>
 #include <QList>
@@ -48,13 +51,36 @@ CodeEditArea::CodeEditArea(QWidget *parent)
 //          this, &CodeEditArea::comment);
 //  connect(btn, &QPushButton::clicked,
 //          this, &CodeEditArea::normal_indent_format);
+//  connect(btn, &QPushButton::clicked,
+//          this, &CodeEditArea::select_the_content_in_parentheses);
+//  connect(btn, &QPushButton::clicked,
+//          this, &CodeEditArea::function_param_translate);
   connect(btn, &QPushButton::clicked,
-          this, &CodeEditArea::select_the_content_in_parentheses);
+          this, &CodeEditArea::translate_line);
 }
 
+// function param translate
+auto CodeEditArea::function_param_translate()-> void
+{
+  auto text_cursor = this->textCursor();
+  text_cursor.select(QTextCursor::BlockUnderCursor);
+  auto e = text_cursor.selectedText();
+  auto s = ParamPassDemo::translate(text_cursor.selectedText());
+  text_cursor.insertText(s);
+}
+
+// a line translate
+auto CodeEditArea::translate_line()-> void
+{
+  auto text_cursor = this->textCursor();
+  text_cursor.select(QTextCursor::LineUnderCursor);
+  auto e = text_cursor.selectedText();
+  auto s = CodeFrontControllWidget::translate_line(text_cursor.selectedText());
+  text_cursor.insertText(s);
+}
 // format
 
-// simple format
+// simple format >>
 
 auto CodeEditArea::normal_indent_format() -> void
 { // 简单一键格式化 (不处理特意修改过的文本)
@@ -156,6 +182,7 @@ auto CodeEditArea::normal_indent_format() -> void
   }
 }
 
+// simple format <<
 
 // 选中括号中的内容
 auto CodeEditArea::_start_position_in_parentheses(const QHash<QString, QString> &right_to_left)-> int
@@ -697,7 +724,12 @@ auto CodeEditArea::init_completer_function()->void
   m_completer->setFilterMode(Qt::MatchStartsWith);
   m_completer->setCompletionMode(QCompleter::PopupCompletion);
   QStringList valueList;
-  valueList << "plan 1" << "rrm" << "what" << "plan 2" << "what plan" << "rr_MM";
+  valueList << "vector"
+            << "string"
+            << "main"
+            << "include"
+            << "cout"
+            << "endl";
   QStringListModel *listModel;
   listModel = new QStringListModel(valueList, this);
   m_completer->setModel(listModel);

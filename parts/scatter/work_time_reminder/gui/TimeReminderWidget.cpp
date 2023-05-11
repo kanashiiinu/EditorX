@@ -45,8 +45,8 @@ auto TimeReminderWidget::init()->void
 
 void TimeReminderWidget::initForm()
 {
-  QWidget *pWidget = this->topLevelWidget();
-  QWindow *pWin = pWidget->windowHandle();
+//  QWidget *pWidget = this->topLevelWidget();
+//  QWindow *pWin = pWidget->windowHandle();
 //  pWin->setFlags(pWidget->windowFlags() | Qt::WindowStaysOnTopHint);
   qDebug() << this->topLevelWidget();
   MaskWidget::Instance()->set_main_widget(this->topLevelWidget());

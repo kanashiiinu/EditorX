@@ -6,10 +6,8 @@
 #include <QWidget>
 #include <QPlainTextEdit>
 #include <QFont>
-#include <QPoint>
 //self
-//#include "MyHighlighter.hpp"
-#include "./parts/right_tab_editor/editor/syntax_highlight/fun/MyHighlighter.hpp"
+#include "MyHighlighter.hpp"
 
 class QCompleter;
 class LeftLineNumberAreaInCodeEditArea;
@@ -23,43 +21,6 @@ class CodeEditArea : public QPlainTextEdit
  public:
   explicit CodeEditArea(QWidget *parent = nullptr);
   ~CodeEditArea() = default;
-
-  // funtion param translate >>
- public:
-  /**
-   * @brief function_param_translate
-   * @note 确保符合ParamPass的输入格式
-   */
-  auto function_param_translate()-> void;
-  // a line translate >>
- public:
-  /**
-   * @brief translate_line
-   * @note 确保符合CodeFront的输入格式
-   */
-  auto translate_line()-> void;
-
-  // file is modify >>
- public:
-  bool m_file_is_modified = false;
-  auto is_file_modified() const -> bool {
-    return this->isWindowModified();
-  }
-  // file is modify <<
-
-  // format >>
- public:
-  // simple format
-  auto normal_indent_format()->void;
-  // format <<
-
-  // 选中括号中的内容 >>
- public:
-  auto select_the_content_in_parentheses()-> void;
- private:
-  auto _start_position_in_parentheses(const QHash<QString, QString> &righ_to_left)-> int;
-  auto _end_position_in_parentheses(const QHash<QString, QString> &left_to_right)-> int;
-  // 选中括号中的内容 <<
 
  public: QString m_file_path = "";
  public: QString m_file_name = "";
@@ -98,19 +59,6 @@ class CodeEditArea : public QPlainTextEdit
   bool m_replaceTab;
   QString m_tabReplace;
 
-  // 注释 >>
-  enum class CommentType
-  {
-    SingleComment = 1,
-    SingleCommentDelete,
-    CoupleComment,
-    CoupleCommentDelete,
-    MultiComment,
-    MultiCommentDelete
-  };
-  void comment();
-  // 注释 >>
-
   // 字体 >>
  public:
   /**
@@ -121,16 +69,7 @@ class CodeEditArea : public QPlainTextEdit
   // 杂项 >>
  public:
 
-  void document_was_modified(); // 文本是否修改
-
-  auto set_cursor_pos(int row, int col)-> void;            // 设置光标位置
-
-  auto set_cursor_pos(QPoint point)-> void;            // 设置光标位置
-
-  auto get_cursor_pos() const -> QPoint;            // 设置光标位置
-
   QChar char_under_cursor(int offset = 0) const ;
-  QChar char_under_cursor(const QTextCursor &cursor_) const ;
 
   QString word_under_cursor() const ;
 

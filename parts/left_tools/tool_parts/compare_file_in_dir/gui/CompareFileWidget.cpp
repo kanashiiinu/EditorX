@@ -8,6 +8,12 @@
 #include <QSpacerItem>
 #include <QFileDialog>
 #include <QListWidget>
+#include <QDebug>
+#include "./tools/tools.hpp"
+
+auto get_file_name(QString const &file_path) {
+  return tool::sub_by_index(file_path, file_path.lastIndexOf("/") + 1, file_path.size());
+}
 
 CompareFileWidget::CompareFileWidget(QWidget *parent)
   : QWidget(parent)
@@ -62,10 +68,13 @@ void CompareFileWidget::_get_files_info(QMap<QString, QString> &mp, QStringList 
   }
   names.clear();
   QStringList fileNames = s_get_files(m_path);
+  auto file_name = QString();
   for (const auto &fileNamePath : fileNames)
   {
     QString md5 = FileMd5Worker::get_file_md5(fileNamePath);
-    mp[fileNamePath] = md5;
+    file_name = get_file_name(fileNamePath);
+//    qDebug() << file_name;
+    mp[file_name] = md5;
     names.append(fileNamePath);
   }
 }
@@ -94,7 +103,7 @@ void CompareFileWidget::slot_right_btn_clicked()
   m_compareNames.clear();
   QString path = QFileDialog::getExistingDirectory(nullptr, "打开文件夹", "*");
   m_path = path;
-  _get_files_info(m_map2, m_fileNames2);
+  this->_get_files_info(m_map2, m_fileNames2);
   m_right_input->setText(path);
   m_right_output->addItems(m_fileNames2);
 }
@@ -104,7 +113,6 @@ void CompareFileWidget::slot_right_btn_clicked()
 */
 void CompareFileWidget::slot_compare_btn_clicked()
 {
-
   for (auto iter1 = m_map1.begin(); iter1 != m_map1.end(); ++iter1)
   {
     const auto &file_1_name = iter1.key();
@@ -113,6 +121,9 @@ void CompareFileWidget::slot_compare_btn_clicked()
     {
       const auto &file_2_name = iter2.key();
       const auto &file_2_md5 = iter2.value();
+      qDebug() << file_1_name;
+      qDebug() << file_2_name;
+
       if (file_1_md5 == file_2_md5 and file_1_name == file_2_name)
       {
         m_compareNames.append(file_1_name);
@@ -120,11 +131,12 @@ void CompareFileWidget::slot_compare_btn_clicked()
       }
     }
   }
+  qDebug() << m_compareNames;
 
   for (int i = 0; i < m_right_output->count(); i++)
   {
     m_right_output->item(i)->setTextColor(QColor("green"));
-    if (not m_compareNames.contains(m_right_output->item(i)->text()))
+    if (not m_compareNames.contains(get_file_name(m_right_output->item(i)->text())))
     {
       m_right_output->item(i)->setTextColor(QColor("red"));
     }

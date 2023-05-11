@@ -77,6 +77,7 @@ Qt::ItemFlags ShortcutsModel::flags(const QModelIndex &index) const
 // 写的不对, 数据显示不出来
 QVariant ShortcutsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+  Q_UNUSED(role);
   if (orientation == Qt::Horizontal)
   {
     switch (section)

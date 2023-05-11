@@ -19,7 +19,7 @@ ThemeWidget::ThemeWidget(QWidget *parent)
   : QWidget(parent)
 {
   this->_init_ui();
-
+  this->_init_text();
 
   m_theme_manager = new ThemesManager(this);
   m_theme_list->addItems(m_theme_manager->get_theme_names());

@@ -53,9 +53,10 @@ void CodeAnalysisWidget::_init_text()
 
 void CodeAnalysisWidget::slot_deal_analysis(QString const &file_path)
 {
-//  QString command = "clang-tidy";
-//  QStringList arguments;
-//  arguments << file_path << "--";
+  if (file_path.isEmpty())
+  {
+    return;
+  }
 
   m_command = m_command;
   qDebug() << m_command;
@@ -66,6 +67,7 @@ void CodeAnalysisWidget::slot_deal_analysis(QString const &file_path)
   QByteArray output = process.readAllStandardOutput();
   QString outputString = QString::fromUtf8(output);
 
+  m_output_editor->setText(outputString);
   qDebug() << "Output:" << outputString;
 }
 

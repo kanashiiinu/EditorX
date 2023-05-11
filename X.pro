@@ -26,6 +26,7 @@ SOURCES += \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerTools.cpp \
     parts/left_tools/tool_parts/class_analyzer/gui/MetaInfoWidget.cpp \
     parts/left_tools/tool_parts/code_analysis/gui/CodeAnalysisWidget.cpp \
+    parts/left_tools/tool_parts/code_format/gui/CodeFormatWidget.cpp \
     parts/left_tools/tool_parts/compare_file_in_dir/fun/FileMd5Worker.cpp \
     parts/left_tools/tool_parts/compare_file_in_dir/gui/CompareFileWidget.cpp \
     parts/left_tools/tool_parts/font_and_color/fun/SimpleTextColorScheme.cpp \
@@ -61,6 +62,7 @@ HEADERS += \
     parts/left_tools/tool_parts/class_analyzer/fun/ClassAnalyzerTools.hpp \
     parts/left_tools/tool_parts/class_analyzer/gui/MetaInfoWidget.hpp \
     parts/left_tools/tool_parts/code_analysis/gui/CodeAnalysisWidget.hpp \
+    parts/left_tools/tool_parts/code_format/gui/CodeFormatWidget.hpp \
     parts/left_tools/tool_parts/compare_file_in_dir/fun/FileMd5Worker.hpp \
     parts/left_tools/tool_parts/compare_file_in_dir/gui/CompareFileWidget.hpp \
     parts/left_tools/tool_parts/font_and_color/fun/SimpleTextColorScheme.hpp \
@@ -94,6 +96,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 include($$PWD/parts/scatter/terminate/terminate.pri)
+include($$PWD/CodeFront/CodeFront.pri)
+include($$PWD/ParamPass/ParamPass.pri)
+
 
 RESOURCES += \
     qss.qrc
+
