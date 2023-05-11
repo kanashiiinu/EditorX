@@ -34,6 +34,7 @@ class TabAndTextAreaEtc : public QWidget
 
   QString get_current_file_path();
 
+  void reload_current_file();
 
 //  auto get_code_edit_area()-> void;
   /**

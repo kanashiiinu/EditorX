@@ -33,6 +33,10 @@ class LeftToolListAndToolWindow : public QWidget
   //
   signal_code_analysis_part_want_current_file_path();
   signal_reponse_code_analysis_current_file_path(QString const &);
+  //
+  signal_code_format_part_want_current_file_path();
+  signal_reponse_code_format_current_file_path(QString const &);
+  signal_code_format_part_format_finish();
 
 };
 

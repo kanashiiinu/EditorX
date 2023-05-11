@@ -65,15 +65,27 @@ MainWindow::MainWindow(QMainWindow *parent)
   // tools
   m_left_tool_list_and_tool_window = new LeftToolListAndToolWindow(this);
   h_box->addWidget(m_left_tool_list_and_tool_window);
+  // note
   connect(m_left_tool_list_and_tool_window, &LeftToolListAndToolWindow::signal_note_part_want_open_note,
   [this](auto const & file_path) {
     m_tab_and_text_area_etc->open_file_by_path(file_path);
   });
-
+  // code analysis
   connect(m_left_tool_list_and_tool_window, &LeftToolListAndToolWindow::signal_code_analysis_part_want_current_file_path,
   [this]() {
     auto file_path = m_tab_and_text_area_etc->get_current_file_path();
     emit m_left_tool_list_and_tool_window->signal_reponse_code_analysis_current_file_path(file_path);
+  });
+  // code format
+  connect(m_left_tool_list_and_tool_window, &LeftToolListAndToolWindow::signal_code_format_part_want_current_file_path,
+  [this]() {
+    auto file_path = m_tab_and_text_area_etc->get_current_file_path();
+    emit m_left_tool_list_and_tool_window->signal_reponse_code_format_current_file_path(file_path);
+  });
+
+  connect(m_left_tool_list_and_tool_window, &LeftToolListAndToolWindow::signal_code_format_part_format_finish,
+  [this]() {
+    m_tab_and_text_area_etc->reload_current_file();
   });
   // right
   // 编辑区

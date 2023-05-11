@@ -12,6 +12,7 @@
 #include "./parts/left_tools/tool_parts/theme/gui/ThemeWidget.hpp"
 #include "./parts/left_tools/tool_parts/note/gui/NoteWidget.hpp"
 #include "./parts/left_tools/tool_parts/code_analysis/gui/CodeAnalysisWidget.hpp"
+#include "./parts/left_tools/tool_parts/code_format/gui/CodeFormatWidget.hpp"
 
 //QT
 #include <QHBoxLayout>
@@ -91,7 +92,14 @@ LeftToolListAndToolWindow::LeftToolListAndToolWindow(QWidget *parent) : QWidget(
 
   // cpp code format
   m_list_widget->addItem(QString("code format"));
-  m_stacked_widget->addWidget(new QWidget(this));
+  auto code_format_widget = new CodeFormatWidget(this);
+  m_stacked_widget->addWidget(code_format_widget);
+  connect(code_format_widget, &CodeFormatWidget::signal_format_wait_for_file,
+          this, &LeftToolListAndToolWindow::signal_code_format_part_want_current_file_path);
+  connect(this, &LeftToolListAndToolWindow::signal_reponse_code_format_current_file_path,
+          code_format_widget, &CodeFormatWidget::slot_deal_format);
+  connect(code_format_widget, &CodeFormatWidget::signal_format_finish,
+          this, &LeftToolListAndToolWindow::signal_code_format_part_format_finish);
 
 
 

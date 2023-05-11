@@ -133,3 +133,19 @@ QString TabAndTextAreaEtc::get_current_file_path()
 {
   return this->current_code_edit_area()->m_file_path;
 }
+
+void TabAndTextAreaEtc::reload_current_file()
+{
+  auto editor = this->current_code_edit_area();
+  QFile file(editor->m_file_path);//参数就是文件的路径
+  //设置打开方式
+  file.open(QIODevice::ReadOnly);
+  //用QTextStream类去读取文本信息
+  QTextStream QS(&file);
+  //用QString类去接收读取的信息
+  QString array = QS.readAll();
+  //将读取到的数据放入textEdit中
+  editor->setPlainText(array);
+  //关闭文件对象
+  file.close();
+}
